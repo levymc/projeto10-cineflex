@@ -11,21 +11,42 @@ export default function App() {
 
     const [allMovies, setAllMovies] = useState([]);
 
+    const [allSeats, setAllSeats] = useState([])
+
     React.useEffect(() => {
-        axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies').then((response) => {
-            setAllMovies(response.data)
-            console.log(response.data)
-        });
-        }, []);
+        const fetchMovies = async () => {
+          try {
+            const response = await axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies');
+            setAllMovies(response.data);
+          } catch (error) {
+            console.error('Erro ao buscar os filmes:', error);
+            setAllMovies([]);
+          }
+        };
+        const fetchSeats = async () => {
+          try {
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${1}/seats`);
+            setAllSeats(response.data);
+          } catch (error) {
+            console.error('Erro ao buscar os filmes:', error);
+            setAllSeats([]);
+          }
+        };
+      
+        fetchSeats();
+        fetchMovies();
+      }, []);
     
     return (
         <>
            <NavContainer>CINEFLEX</NavContainer>
 
-            <HomePage
+            {/* <HomePage
                 allMovies = {allMovies}
+            /> */}
+            <SeatsPage  
+                allSeats = {allSeats}
             />
-            {/* <SeatsPage /> */}
             {/* <SessionsPage /> */}
             {/* <SuccessPage /> */}
         </>
