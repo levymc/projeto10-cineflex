@@ -3,13 +3,28 @@ import HomePage from "./pages/HomePage/HomePage"
 import SeatsPage from "./pages/SeatsPage/SeatsPage"
 import SessionsPage from "./pages/SessionsPage/SessionsPage"
 import SuccessPage from "./pages/SuccessPage/SuccessPage"
+import axios from 'axios';
+import React, { useState } from "react";
 
 export default function App() {
+    axios.defaults.headers.common['Authorization'] = 'JrVC988hm5rkhTQCtGv4DBlq';
+
+    const [allMovies, setAllMovies] = useState(null);
+
+    React.useEffect(() => {
+        axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies').then((response) => {
+            setAllMovies(response.data)
+        });
+        }, []);
+    
     return (
         <>
            <NavContainer>CINEFLEX</NavContainer>
+           
 
-            <HomePage />
+            <HomePage
+                allMovies = {allMovies}
+            />
             {/* <SeatsPage /> */}
             {/* <SessionsPage /> */}
             {/* <SuccessPage /> */}
