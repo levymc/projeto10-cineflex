@@ -12,15 +12,22 @@ export default function App() {
     const [allMovies, setAllMovies] = useState(null);
 
     React.useEffect(() => {
-        axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies').then((response) => {
-            setAllMovies(response.data)
-        });
-        }, []);
+        const fetchMovies = async () => {
+          try {
+            const response = await axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies');
+            setAllMovies(response.data);
+          } catch (error) {
+            console.error('Erro ao buscar os filmes:', error);
+            setAllMovies([]);
+          }
+        };
+      
+        fetchMovies();
+      }, []);
     
     return (
         <>
            <NavContainer>CINEFLEX</NavContainer>
-           
 
             <HomePage
                 allMovies = {allMovies}

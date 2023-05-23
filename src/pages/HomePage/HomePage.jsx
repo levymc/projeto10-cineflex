@@ -9,10 +9,17 @@ export default function HomePage(props) {
             <ListContainer>
                 {props.allMovies.map((movie, i) => 
                     <MovieContainer>
-                        <img id={movie.id} key={movie.id} src={movie.posterURL} alt={movie.title} />
+                        <img 
+                            id={movie.id} 
+                            key={movie.id} 
+                            src={movie.posterURL} 
+                            alt={movie.title} 
+                            onClick={() => {
+                                console.log(movie.id)
+                            }}
+                        />
                     </MovieContainer>
                 )}
-                
             </ListContainer>
 
         </PageContainer>
