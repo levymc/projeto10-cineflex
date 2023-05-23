@@ -45,7 +45,7 @@ export default function App() {
                 allMovies = {allMovies}
             /> */}
             <SeatsPage  
-                allSeats = {allSeats}
+                allSeats = {allSeats ? allSeats : []}
             />
             {/* <SessionsPage /> */}
             {/* <SuccessPage /> */}

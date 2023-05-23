@@ -1,14 +1,13 @@
 import styled from "styled-components"
 
 export default function SeatsPage(props) {
-    console.log(props.allSeats)
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             
             <SeatsContainer>
-                {props.allSeats.seats.map((seat, i) => 
+                {props.allSeats.seats && props.allSeats.seats.map((seat, i) => 
                     <SeatItem>{seat.name}</SeatItem>
                 )}
             </SeatsContainer>
