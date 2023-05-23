@@ -1,29 +1,37 @@
 import styled from "styled-components"
+import { useNavigate } from 'react-router-dom';
+
 
 export default function HomePage(props) {
     console.log(props.allMovies)
-    return (
-        <PageContainer>
-            Selecione o filme
-
-            <ListContainer>
-                {props.allMovies.map((movie, i) => 
-                    <MovieContainer key={movie.id}>
-                        <img 
-                            id={movie.id} 
-                            key={movie.id} 
-                            src={movie.posterURL} 
-                            alt={movie.title} 
-                            onClick={() => {
-                                console.log(movie.id)
-                            }}
-                        />
-                    </MovieContainer>
-                )}
-            </ListContainer>
-
-        </PageContainer>
-    )
+    const navigateTo = useNavigate();
+    if(props.allMovies.length === 0){
+        return <div>....Carregando</div>
+    }else{
+        return (
+            <PageContainer>
+                Selecione o filme
+    
+                <ListContainer>
+                    {props.allMovies.map((movie, i) => 
+                        <MovieContainer key={movie.id}>
+                            <img 
+                                id={movie.id} 
+                                key={movie.id} 
+                                src={movie.posterURL} 
+                                alt={movie.title} 
+                                onClick={() => {
+                                    console.log(movie.id)
+                                    navigateTo('/seatspage');
+                                }}
+                            />
+                        </MovieContainer>
+                    )}
+                </ListContainer>
+    
+            </PageContainer>
+        )
+    }
 }
 
 const PageContainer = styled.div`
