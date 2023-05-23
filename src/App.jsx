@@ -31,7 +31,7 @@ export default function App() {
     return (
         <>
             <Router>
-                <NavContainer>CINEFLEX</NavContainer>
+                <NavContainer onClick={() => window.location.reload()}>CINEFLEX</NavContainer>
                 <Routes>
                     <Route path="/" element={
                         <HomePage
@@ -56,6 +56,7 @@ export default function App() {
 }
 
 const NavContainer = styled.div`
+    cursor: pointer;
     width: 100%;
     height: 70px;
     display: flex;

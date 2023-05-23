@@ -1,9 +1,13 @@
 import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
+import { useLocation } from 'react-router-dom';
 
 
 export default function SessionsPage() {
+
+    const {data} = useLocation();
+    const {id} = data;
 
     const [movie, setMovie] = useState([])
 
@@ -31,7 +35,7 @@ export default function SessionsPage() {
                         {day.weekday} - {day.date}
                         <ButtonsContainer key={day.id}>
                             {day.showtimes.map((time, i) => 
-                                <button key={time.id}>{time.name}</button>
+                                <button  key={time.id}>{time.name}</button>
                             )}
                         </ButtonsContainer>
                     </SessionContainer>

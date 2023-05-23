@@ -1,8 +1,12 @@
 import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
+import { useLocation } from 'react-router-dom';
 
 export default function SeatsPage(props) {
+
+    const {state} = useLocation();
+    const {id} = state;
 
     const [movie, setMovie] = useState([])
 
@@ -65,7 +69,7 @@ export default function SeatsPage(props) {
                 CPF do Comprador:
                 <input placeholder="Digite seu CPF..." />
 
-                <button>Reservar Assento(s)</button>
+                <button onClick={() => console.log(id)}>Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer>

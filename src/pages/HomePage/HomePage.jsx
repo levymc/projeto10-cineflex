@@ -22,7 +22,7 @@ export default function HomePage(props) {
                                 alt={movie.title} 
                                 onClick={() => {
                                     console.log(movie.id)
-                                    navigateTo('/seatspage');
+                                    navigateTo('/seatspage', {state: {id: movie.id}});
                                 }}
                             />
                         </MovieContainer>
