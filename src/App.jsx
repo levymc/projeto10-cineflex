@@ -9,21 +9,14 @@ import React, { useState } from "react";
 export default function App() {
     axios.defaults.headers.common['Authorization'] = 'JrVC988hm5rkhTQCtGv4DBlq';
 
-    const [allMovies, setAllMovies] = useState(null);
+    const [allMovies, setAllMovies] = useState([]);
 
     React.useEffect(() => {
-        const fetchMovies = async () => {
-          try {
-            const response = await axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies');
-            setAllMovies(response.data);
-          } catch (error) {
-            console.error('Erro ao buscar os filmes:', error);
-            setAllMovies([]);
-          }
-        };
-      
-        fetchMovies();
-      }, []);
+        axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies').then((response) => {
+            setAllMovies(response.data)
+            console.log(response.data)
+        });
+        }, []);
     
     return (
         <>

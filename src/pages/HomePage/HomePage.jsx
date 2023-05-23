@@ -1,14 +1,14 @@
 import styled from "styled-components"
 
 export default function HomePage(props) {
-    console.log(props.allMovies[0].posterURL)
+    console.log(props.allMovies)
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
                 {props.allMovies.map((movie, i) => 
-                    <MovieContainer>
+                    <MovieContainer key={movie.id}>
                         <img 
                             id={movie.id} 
                             key={movie.id} 
