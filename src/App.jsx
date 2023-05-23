@@ -23,17 +23,7 @@ export default function App() {
             setAllMovies([]);
           }
         };
-        const fetchSeats = async () => {
-          try {
-            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${1}/seats`);
-            setAllSeats(response.data);
-          } catch (error) {
-            console.error('Erro ao buscar os filmes:', error);
-            setAllSeats([]);
-          }
-        };
-      
-        fetchSeats();
+        
         fetchMovies();
       }, []);
     
@@ -44,10 +34,11 @@ export default function App() {
             {/* <HomePage
                 allMovies = {allMovies}
             /> */}
-            <SeatsPage  
-                allSeats = {allSeats ? allSeats : []}
-            />
-            {/* <SessionsPage /> */}
+            {/* <SeatsPage  
+                setAllSeats = {setAllSeats}
+                allSeats = {allSeats}
+            /> */}
+            <SessionsPage />
             {/* <SuccessPage /> */}
         </>
     )

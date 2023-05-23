@@ -1,12 +1,42 @@
 import styled from "styled-components"
+import axios from 'axios';
+import React, { useState } from "react";
+
 
 export default function SessionsPage() {
+
+    const [movie, setMovie] = useState([])
+
+    React.useEffect(() => {
+        const fetchSMovie = async () => {
+            try {
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${1}/showtimes`);
+            setMovie(response.data);
+            } catch (error) {
+            console.error('Erro ao buscar os filmes:', error);
+            setMovie([]);
+            }
+        };
+    
+        fetchSMovie();
+    }, []);
+
 
     return (
         <PageContainer>
             Selecione o horário
             <div>
-                <SessionContainer>
+                {movie.days && movie.days.map((day, i) =>
+                    <SessionContainer key={day.id}>
+                        {day.weekday} - {day.date}
+                        <ButtonsContainer key={day.id}>
+                            {day.showtimes.map((time, i) => 
+                                <button key={time.id}>{time.name}</button>
+                            )}
+                        </ButtonsContainer>
+                    </SessionContainer>
+                )}
+                {/* <SessionContainer>
                     Sexta - 03/03/2023
                     <ButtonsContainer>
                         <button>14:00</button>
@@ -28,7 +58,7 @@ export default function SessionsPage() {
                         <button>14:00</button>
                         <button>15:00</button>
                     </ButtonsContainer>
-                </SessionContainer>
+                </SessionContainer> */}
             </div>
 
             <FooterContainer>
