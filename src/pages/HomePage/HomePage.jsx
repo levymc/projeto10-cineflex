@@ -1,30 +1,18 @@
 import styled from "styled-components"
 
 export default function HomePage(props) {
-    console.log(props.allMovies)
+    console.log(props.allMovies[0].posterURL)
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
-                {/* {props.allMovies.map((movie, i) => {
-
-                })} */}
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
+                {props.allMovies.map((movie, i) => 
+                    <MovieContainer>
+                        <img id={movie.id} key={movie.id} src={movie.posterURL} alt={movie.title} />
+                    </MovieContainer>
+                )}
+                
             </ListContainer>
 
         </PageContainer>
