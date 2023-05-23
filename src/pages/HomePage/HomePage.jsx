@@ -54,6 +54,7 @@ const MovieContainer = styled.div`
     justify-content: center;
     margin: 10px;
     img {
+        cursor: pointer;
         width: 130px;
         height: 190px;
     }
