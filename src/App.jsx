@@ -31,14 +31,14 @@ export default function App() {
         <>
            <NavContainer>CINEFLEX</NavContainer>
 
-            {/* <HomePage
+            <HomePage
                 allMovies = {allMovies}
-            /> */}
+            />
             {/* <SeatsPage  
                 setAllSeats = {setAllSeats}
                 allSeats = {allSeats}
             /> */}
-            <SessionsPage />
+            {/* <SessionsPage /> */}
             {/* <SuccessPage /> */}
         </>
     )
