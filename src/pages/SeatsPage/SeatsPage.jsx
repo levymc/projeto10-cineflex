@@ -5,6 +5,25 @@ import { useLocation } from 'react-router-dom';
 
 export default function SeatsPage(props) {
 
+    const icons = {
+        selecionado: {
+            border: "1px solid #0E7D71",
+            backGroundColor: "#1AAE9E",
+            msg: "Selecionado",
+        },
+        disponivel: {
+            border: "1px solid #7B8B99",
+            backGroundColor: "#C3CFD9",
+            msg: "Disponível",
+        },
+        indisponivel: {
+            border: "1px solid #F7C52B",
+            backGroundColor: "#FBE192",
+            msg: "Indisponível",
+        }
+    }
+    const iconsArray = Object.entries(icons);
+
     const {state} = useLocation();
     const {id} = state;
 
@@ -13,7 +32,7 @@ export default function SeatsPage(props) {
     React.useEffect(() => {
         const fetchSeats = async () => {
             try {
-            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${1}/seats`);
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`);
             props.setAllSeats(response.data);
             } catch (error) {
             console.error('Erro ao buscar os filmes:', error);
@@ -22,7 +41,7 @@ export default function SeatsPage(props) {
         };
         const fetchSMovie = async () => {
             try {
-            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${1}/showtimes`);
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${id}/showtimes`);
             setMovie(response.data);
             } catch (error) {
             console.error('Erro ao buscar os filmes:', error);
@@ -32,10 +51,10 @@ export default function SeatsPage(props) {
     
         fetchSeats();
         fetchSMovie();
-    }, []);
+    }, [movie]);
 
     console.log("Horario", movie)
-
+    
     return (
         <PageContainer>
             Selecione o(s) assento(s)
@@ -48,18 +67,22 @@ export default function SeatsPage(props) {
             </SeatsContainer>
 
             <CaptionContainer>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Selecionado
-                </CaptionItem>
-                <CaptionItem>
+                {iconsArray.map(([key, value]) => (
+                    <CaptionItem key={key}>
+                        <CaptionCircle iconsArray={iconsArray} key={key} border={value.border} backGroundColor={value.backGroundColor} />
+                        {value.msg}
+                    </CaptionItem>
+                    ))
+                }
+                
+                {/* <CaptionItem>
                     <CaptionCircle />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
                     <CaptionCircle />
                     Indisponível
-                </CaptionItem>
+                </CaptionItem> */}
             </CaptionContainer>
 
             <FormContainer>
@@ -129,8 +152,8 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: ${(props) => props.border};
+    background-color: ${(props) => props.backGroundColor};
     height: 25px;
     width: 25px;
     border-radius: 25px;
