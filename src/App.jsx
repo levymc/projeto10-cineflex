@@ -40,6 +40,11 @@ export default function App() {
                     }>
                         
                     </Route>
+
+                    <Route path="/sessionspage" element={
+                        <SessionsPage />
+                    }></Route>
+
                     <Route path="/seatspage" element={
                         <SeatsPage  
                             setAllSeats = {setAllSeats}
@@ -47,7 +52,7 @@ export default function App() {
                         />
                     }>
                     </Route>
-                    {/* <SessionsPage /> */}
+                    
                     {/* <SuccessPage /> */}
                 </Routes>
             </Router>

@@ -26,7 +26,7 @@ export default function SeatsPage(props) {
     const iconsArray = Object.entries(icons);
 
     const {state} = useLocation();
-    const {id} = state;
+    const {day, time, id} = state;
 
     const [isSelected, setIsSelected] = useState([])
     const [movie, setMovie] = useState([])
@@ -73,13 +73,11 @@ export default function SeatsPage(props) {
     };
           
 
-    console.log("Horario", movie)
-    
     const changeSelect = (index, newValue) => {
         setIsSelected(prevStatus => {
           const newArray = [...prevStatus];
           newArray[index] = newValue;
-          console.log(newArray)
+        //   console.log(newArray)
           return newArray;
         });
       };
@@ -143,7 +141,7 @@ export default function SeatsPage(props) {
                 </div>
                 <div>
                     <p>{movie.title}</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{day} - {time.name}</p>
                 </div>
             </FooterContainer>
 

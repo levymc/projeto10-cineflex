@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function HomePage(props) {
-    console.log(props.allMovies)
     const navigateTo = useNavigate();
     if(props.allMovies.length === 0){
         return <div>....Carregando</div>
@@ -22,7 +21,7 @@ export default function HomePage(props) {
                                 alt={movie.title} 
                                 onClick={() => {
                                     console.log(movie.id)
-                                    navigateTo('/seatspage', {state: {id: movie.id}});
+                                    navigateTo('/sessionspage', {state: {id: movie.id}});
                                 }}
                             />
                         </MovieContainer>

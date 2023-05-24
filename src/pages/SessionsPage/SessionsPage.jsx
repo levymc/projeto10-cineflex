@@ -1,20 +1,20 @@
 import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 export default function SessionsPage() {
+    const navigateTo = useNavigate();
 
-    const {data} = useLocation();
-    const {id} = data;
-
+    const {state} = useLocation();
+    const {id} = state;
     const [movie, setMovie] = useState([])
 
     React.useEffect(() => {
         const fetchSMovie = async () => {
             try {
-            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${1}/showtimes`);
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${id}/showtimes`);
             setMovie(response.data);
             } catch (error) {
             console.error('Erro ao buscar os filmes:', error);
@@ -25,52 +25,28 @@ export default function SessionsPage() {
         fetchSMovie();
     }, []);
 
+    console.log(movie)
 
     return (
         <PageContainer>
             Selecione o horário
-            <div>
-                {movie.days && movie.days.map((day, i) =>
-                    <SessionContainer key={day.id}>
-                        {day.weekday} - {day.date}
-                        <ButtonsContainer key={day.id}>
-                            {day.showtimes.map((time, i) => 
-                                <button  key={time.id}>{time.name}</button>
-                            )}
-                        </ButtonsContainer>
-                    </SessionContainer>
-                )}
-                {/* <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
+            {movie.days && movie.days.map((day, i) =>
+                <SessionContainer key={day.id}>
+                    {day.weekday} - {day.date}
+                    <ButtonsContainer key={day.id}>
+                        {day.showtimes.map((time, i) => 
+                            <button onClick={() => navigateTo('/seatspage' ,{state: {id: id,time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
+                        )}
                     </ButtonsContainer>
                 </SessionContainer>
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer> */}
-            </div>
+            )}
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={movie.posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
+                    <p>{movie.title}</p>
                 </div>
             </FooterContainer>
 
