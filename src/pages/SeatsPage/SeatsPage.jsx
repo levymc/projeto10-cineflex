@@ -26,51 +26,46 @@ export default function SeatsPage(props) {
     const iconsArray = Object.entries(icons);
 
     const {state} = useLocation();
-    const {day, time, id} = state;
+    const {day, time, sessionId, movieId} = state;
 
     const [isSelected, setIsSelected] = useState([])
     const [movie, setMovie] = useState([])
 
     React.useEffect(() => {
         const fetchSeats = async () => {
-            try {
-            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`);
+          try {
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessionId}/seats`);
             props.setAllSeats(response.data);
-            } catch (error) {
+          } catch (error) {
             console.error('Erro ao buscar os assentos:', error);
             props.setAllSeats([]);
-            }
+          }
         };
-
+      
         const fetchMovie = async () => {
-            try {
-            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${id}/showtimes`);
+          try {
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`);
             setMovie(response.data);
-            } catch (error) {
+          } catch (error) {
             console.error('Erro ao buscar os filmes:', error);
             setMovie([]);
-            }
+          }
         };
-
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-            await Promise.all([fetchSeats(), fetchMovie()]); // Aguarda as duas requisições
-            } catch (error) {
-            console.error('Erro ao buscar os dados:', error);
-            }
-            setIsLoading(false); 
-        };
-
-        fetchData();
-        atualiza();
+      
+        fetchSeats();
+        fetchMovie(); 
+        
     }, []);
 
+    React.useEffect(() => {
+        atualiza();
+    }, [props.allSeats]); // Adicione este useEffect com dependência em props.allSeats
+    console.log(props.allSeats)
     const atualiza = () => {
         setIsSelected(
             props.allSeats?.seats?.map((selec, i) => selec.isAvailable ? "vazio" : "indisponivel") || []
         );
-    };
+    }; 
           
 
     const changeSelect = (index, newValue, seat) => {
@@ -82,10 +77,9 @@ export default function SeatsPage(props) {
                 return newArray;
               });
         }
-        console.log(seat)
+        console.log(isSelected)
         
       };
-
     return (
         <PageContainer>
             Selecione o(s) assento(s)

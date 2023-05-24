@@ -8,13 +8,13 @@ export default function SessionsPage() {
     const navigateTo = useNavigate();
 
     const {state} = useLocation();
-    const {id} = state;
+    const {movieId} = state;
     const [movie, setMovie] = useState([])
 
     React.useEffect(() => {
         const fetchSMovie = async () => {
             try {
-            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${id}/showtimes`);
+            const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`);
             setMovie(response.data);
             } catch (error) {
             console.error('Erro ao buscar os filmes:', error);
@@ -35,7 +35,7 @@ export default function SessionsPage() {
                     {day.weekday} - {day.date}
                     <ButtonsContainer key={day.id}>
                         {day.showtimes.map((time, i) => 
-                            <button onClick={() => navigateTo(`/assentos/${day.id}` ,{state: {id: id,time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
+                            <button onClick={() => navigateTo(`/assentos/${day.id}` ,{state: {sessionId: time.id, movieId: movieId, time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
                         )}
                     </ButtonsContainer>
                 </SessionContainer>
