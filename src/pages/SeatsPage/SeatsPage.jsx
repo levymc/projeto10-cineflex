@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 
 export default function SeatsPage(props) {
+    const [isLoading, setIsLoading] = useState(true);
 
     const icons = {
         selecionado: {
@@ -27,6 +28,7 @@ export default function SeatsPage(props) {
     const {state} = useLocation();
     const {id} = state;
 
+    const [isSelected, setIsSelected] = useState([])
     const [movie, setMovie] = useState([])
 
     React.useEffect(() => {
@@ -35,11 +37,12 @@ export default function SeatsPage(props) {
             const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`);
             props.setAllSeats(response.data);
             } catch (error) {
-            console.error('Erro ao buscar os filmes:', error);
+            console.error('Erro ao buscar os assentos:', error);
             props.setAllSeats([]);
             }
         };
-        const fetchSMovie = async () => {
+
+        const fetchMovie = async () => {
             try {
             const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${id}/showtimes`);
             setMovie(response.data);
@@ -48,13 +51,39 @@ export default function SeatsPage(props) {
             setMovie([]);
             }
         };
-    
-        fetchSeats();
-        fetchSMovie();
-    }, [movie]);
+
+        const fetchData = async () => {
+            setIsLoading(true); // Define isLoading como true antes de fazer as requisições
+            try {
+            await Promise.all([fetchSeats(), fetchMovie()]); // Aguarda as duas requisições
+            } catch (error) {
+            console.error('Erro ao buscar os dados:', error);
+            }
+            setIsLoading(false); // Define isLoading como false quando os dados forem recebidos
+        };
+
+        fetchData();
+        atualiza();
+    }, []);
+
+    const atualiza = () => {
+        setIsSelected(
+            props.allSeats?.seats?.map((selec, i) => false) || []
+        );
+    };
+          
 
     console.log("Horario", movie)
     
+    const changeSelect = (index, newValue) => {
+        setIsSelected(prevStatus => {
+          const newArray = [...prevStatus];
+          newArray[index] = newValue;
+          console.log(newArray)
+          return newArray;
+        });
+      };
+
     return (
         <PageContainer>
             Selecione o(s) assento(s)
@@ -62,14 +91,27 @@ export default function SeatsPage(props) {
             
             <SeatsContainer>
                 {props.allSeats.seats && props.allSeats.seats.map((seat, i) => 
-                    <SeatItem key={seat.id}>{seat.name}</SeatItem>
+                    <SeatItem 
+                        isSelected = {isSelected[i]}
+                        onClick={() =>
+                            changeSelect(i, !isSelected[i])
+                        }
+                        key={seat.id}>
+                        {seat.name}
+                    </SeatItem>
                 )}
             </SeatsContainer>
 
             <CaptionContainer>
                 {iconsArray.map(([key, value]) => (
                     <CaptionItem key={key}>
-                        <CaptionCircle iconsArray={iconsArray} key={key} border={value.border} backGroundColor={value.backGroundColor} />
+                        <CaptionCircle 
+                            iconsArray={iconsArray} 
+                            key={key} 
+                            border={value.border} 
+                            backGroundColor={value.backGroundColor} 
+                            
+                        />
                         {value.msg}
                     </CaptionItem>
                     ))
@@ -108,6 +150,13 @@ export default function SeatsPage(props) {
         </PageContainer>
     )
 }
+
+const LoadingContainer = styled.div`
+  font-size: 20px;
+  text-align: center;
+  margin-top: 100px;
+`;
+
 
 const PageContainer = styled.div`
     display: flex;
@@ -169,8 +218,9 @@ const CaptionItem = styled.div`
     font-size: 12px;
 `
 const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: ${(props) => (props.isSelected ? "#1AAE9E" : "#C3CFD9")};
+    cursor: pointer;
+    background-color: ${(props) => (props.isSelected ? "#1AAE9E" : "lightblue")};
     height: 25px;
     width: 25px;
     border-radius: 25px;
