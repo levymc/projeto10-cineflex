@@ -35,7 +35,7 @@ export default function SessionsPage() {
                     {day.weekday} - {day.date}
                     <ButtonsContainer key={day.id}>
                         {day.showtimes.map((time, i) => 
-                            <button onClick={() => navigateTo('/seatspage' ,{state: {id: id,time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
+                            <button onClick={() => navigateTo(`/assentos/${day.id}` ,{state: {id: id,time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
                         )}
                     </ButtonsContainer>
                 </SessionContainer>

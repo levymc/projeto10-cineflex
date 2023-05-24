@@ -21,7 +21,7 @@ export default function HomePage(props) {
                                 alt={movie.title} 
                                 onClick={() => {
                                     console.log(movie.id)
-                                    navigateTo('/sessionspage', {state: {id: movie.id}});
+                                    navigateTo(`/sessoes/${movie.id}`, {state: {id: movie.id}});
                                 }}
                             />
                         </MovieContainer>

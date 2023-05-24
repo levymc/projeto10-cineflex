@@ -41,11 +41,11 @@ export default function App() {
                         
                     </Route>
 
-                    <Route path="/sessionspage" element={
+                    <Route path="/sessoes/:idFilme" element={
                         <SessionsPage />
                     }></Route>
 
-                    <Route path="/seatspage" element={
+                    <Route path="/assentos/:idSessao" element={
                         <SeatsPage  
                             setAllSeats = {setAllSeats}
                             allSeats = {allSeats}
