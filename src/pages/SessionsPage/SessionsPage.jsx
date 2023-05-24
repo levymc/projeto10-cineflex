@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link  } from 'react-router-dom';
 
 
 export default function SessionsPage() {
@@ -43,7 +43,7 @@ export default function SessionsPage() {
 
             <FooterContainer>
                 <div>
-                    <img src={movie.posterURL} alt="poster" />
+                    <img src={movie.posterURL} onClick={() => console.log(idFilme)} alt="poster" />
                 </div>
                 <div>
                     <p>{movie.title}</p>
