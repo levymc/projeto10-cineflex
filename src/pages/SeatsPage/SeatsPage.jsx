@@ -53,13 +53,13 @@ export default function SeatsPage(props) {
         };
 
         const fetchData = async () => {
-            setIsLoading(true); // Define isLoading como true antes de fazer as requisições
+            setIsLoading(true);
             try {
             await Promise.all([fetchSeats(), fetchMovie()]); // Aguarda as duas requisições
             } catch (error) {
             console.error('Erro ao buscar os dados:', error);
             }
-            setIsLoading(false); // Define isLoading como false quando os dados forem recebidos
+            setIsLoading(false); 
         };
 
         fetchData();
@@ -68,18 +68,22 @@ export default function SeatsPage(props) {
 
     const atualiza = () => {
         setIsSelected(
-            props.allSeats?.seats?.map((selec, i) => false) || []
+            props.allSeats?.seats?.map((selec, i) => selec.isAvailable ? "vazio" : "indisponivel") || []
         );
     };
           
 
-    const changeSelect = (index, newValue) => {
-        setIsSelected(prevStatus => {
-          const newArray = [...prevStatus];
-          newArray[index] = newValue;
-        //   console.log(newArray)
-          return newArray;
-        });
+    const changeSelect = (index, newValue, seat) => {
+        if (seat.isAvailable){
+            setIsSelected(prevStatus => {
+                const newArray = [...prevStatus];
+                newArray[index] = newArray[index] === "selecionado" ? "vazio" : newValue;
+              //   console.log(newArray)
+                return newArray;
+              });
+        }
+        console.log(seat)
+        
       };
 
     return (
@@ -91,8 +95,9 @@ export default function SeatsPage(props) {
                 {props.allSeats.seats && props.allSeats.seats.map((seat, i) => 
                     <SeatItem 
                         isSelected = {isSelected[i]}
+                        isAvailable = {seat.isAvailable}
                         onClick={() =>
-                            changeSelect(i, !isSelected[i])
+                            changeSelect(i, "selecionado", seat)
                         }
                         key={seat.id}>
                         {seat.name}
@@ -216,9 +221,15 @@ const CaptionItem = styled.div`
     font-size: 12px;
 `
 const SeatItem = styled.div`
-    border: ${(props) => (props.isSelected ? "#1AAE9E" : "#C3CFD9")};
+    border: ${(props) =>
+        props.isSelected === "selecionado"
+            ? "#1AAE9E"
+            : props.isSelected === "indisponivel"
+            ? "#FBE192"
+            : "#C3CFD9"};
     cursor: pointer;
-    background-color: ${(props) => (props.isSelected ? "#1AAE9E" : "lightblue")};
+    background-color: ${(props) =>
+        props.isSelected === "selecionado" ? "#1AAE9E": props.isSelected === "indisponivel" ? '#FBE192' : "lightblue"};
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -228,7 +239,8 @@ const SeatItem = styled.div`
     align-items: center;
     justify-content: center;
     margin: 5px 3px;
-`
+`;
+
 const FooterContainer = styled.div`
     width: 100%;
     height: 120px;
