@@ -91,6 +91,7 @@ export default function SeatsPage(props) {
                     <SeatItem 
                         isSelected = {isSelected[i]}
                         isAvailable = {seat.isAvailable}
+                        data-test="seat"
                         onClick={() =>
                             changeSelect(i, "selecionado", seat)
                         }
@@ -127,15 +128,15 @@ export default function SeatsPage(props) {
 
             <FormContainer>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <input data-test="client-name" placeholder="Digite seu nome..." />
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                <input data-test="client-cpf" placeholder="Digite seu CPF..." />
 
-                <button onClick={() => console.log(id)}>Reservar Assento(s)</button>
+                <button data-test="book-seat-btn" onClick={() => console.log(id)}>Reservar Assento(s)</button>
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={movie.posterURL} alt="poster" />
                 </div>

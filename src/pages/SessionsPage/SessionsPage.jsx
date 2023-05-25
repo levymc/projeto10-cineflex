@@ -33,15 +33,15 @@ export default function SessionsPage() {
             {movie.days && movie.days.map((day, i) =>
                 <SessionContainer key={day.id}>
                     {day.weekday} - {day.date}
-                    <ButtonsContainer key={day.id}>
+                    <ButtonsContainer key={day.id} data-test="movie-day">
                         {day.showtimes.map((time, i) => 
-                            <button onClick={() => navigateTo(`/assentos/${day.id}` ,{state: {sessionId: time.id, movieId: movieId, time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
+                            <button data-test="showtime" onClick={() => navigateTo(`/assentos/${day.id}` ,{state: {sessionId: time.id, movieId: movieId, time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
                         )}
                     </ButtonsContainer>
                 </SessionContainer>
             )}
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={movie.posterURL} onClick={() => console.log(idFilme)} alt="poster" />
                 </div>

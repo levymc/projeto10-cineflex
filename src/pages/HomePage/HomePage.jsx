@@ -13,7 +13,7 @@ export default function HomePage(props) {
     
                 <ListContainer>
                     {props.allMovies.map((movie, i) => 
-                        <MovieContainer key={movie.id}>
+                        <MovieContainer key={movie.id} data-test="movie">
                             <img 
                                 id={movie.id} 
                                 key={movie.id} 
