@@ -15,7 +15,7 @@ export default function App() {
     const [allSeats, setAllSeats] = useState([])
 
     React.useEffect(() => {
-        const fetchMovies = async () => {
+        const getMovies = async () => {
           try {
             const response = await axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies');
             setAllMovies(response.data);
@@ -25,7 +25,7 @@ export default function App() {
           }
         };
         
-        fetchMovies();
+        getMovies();
       }, []);
     
     return (

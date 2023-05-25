@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 export default function SeatsPage(props) {
     const [isLoading, setIsLoading] = useState(true);
@@ -27,12 +27,13 @@ export default function SeatsPage(props) {
 
     const {state} = useLocation();
     const {day, time, sessionId, movieId} = state;
+    // const parametros = useParams();
 
     const [isSelected, setIsSelected] = useState([])
     const [movie, setMovie] = useState([])
 
     React.useEffect(() => {
-        const fetchSeats = async () => {
+        const getSeats = async () => {
           try {
             const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessionId}/seats`);
             props.setAllSeats(response.data);
@@ -42,7 +43,7 @@ export default function SeatsPage(props) {
           }
         };
       
-        const fetchMovie = async () => {
+        const getMovie = async () => {
           try {
             const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`);
             setMovie(response.data);
@@ -52,8 +53,8 @@ export default function SeatsPage(props) {
           }
         };
       
-        fetchSeats();
-        fetchMovie(); 
+        getSeats();
+        getMovie(); 
         
     }, []);
 

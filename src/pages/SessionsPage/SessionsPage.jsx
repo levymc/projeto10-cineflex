@@ -12,7 +12,7 @@ export default function SessionsPage() {
     const [movie, setMovie] = useState([])
 
     React.useEffect(() => {
-        const fetchSMovie = async () => {
+        const getSMovie = async () => {
             try {
             const response = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${movieId}/showtimes`);
             setMovie(response.data);
@@ -22,7 +22,7 @@ export default function SessionsPage() {
             }
         };
     
-        fetchSMovie();
+        getSMovie();
     }, []);
 
     console.log(movie)
