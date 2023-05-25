@@ -59,15 +59,15 @@ export default function SeatsPage(props) {
     }, []);
 
     React.useEffect(() => {
-        atualiza();
-    }, [props.allSeats]); // Adicione este useEffect com dependência em props.allSeats
-    console.log(props.allSeats)
-    const atualiza = () => {
-        setIsSelected(
-            props.allSeats?.seats?.map((selec, i) => selec.isAvailable ? "vazio" : "indisponivel") || []
-        );
+            atualiza();
+        }, [props.allSeats]); // Adicione este useEffect com dependência em props.allSeats
+        console.log(props.allSeats)
+        const atualiza = () => {
+            setIsSelected(
+                props.allSeats?.seats?.map((selec, i) => selec.isAvailable === true ? "vazio" : "indisponivel") || []
+            );
     }; 
-          
+
 
     const changeSelect = (index, newValue, seat) => {
         if (seat.isAvailable){
@@ -199,6 +199,7 @@ const CaptionContainer = styled.div`
     justify-content: space-between;
     margin: 20px;
 `
+
 const CaptionCircle = styled.div`
     border: ${(props) => props.border};
     background-color: ${(props) => props.backGroundColor};
