@@ -32,6 +32,8 @@ export default function SeatsPage(props) {
     const [isSelected, setIsSelected] = useState([])
     const [movie, setMovie] = useState([])
 
+    const [reservados, setReservados] = useState([])
+
     const [nomeComprador, setNomeComprador] = useState('');
     const [cpfComprador, setCpfComprador] = useState('');
 
@@ -42,7 +44,10 @@ export default function SeatsPage(props) {
         navigateTo('/sucesso', {
         state: {
             nomeComprador: nomeComprador,
-            cpfComprador: cpfComprador
+            cpfComprador: cpfComprador,
+            isSelected: isSelected,
+            allSeats: props.allSeats,
+            indexSelectedSeat: indexSelectedSeat
         }
         })
     };
@@ -82,18 +87,26 @@ export default function SeatsPage(props) {
             );
     }; 
 
+    const [indexSelectedSeat, setIndexSelectedSeat] = useState([]);
 
     const changeSelect = (index, newValue, seat) => {
-        if (seat.isAvailable){
-            setIsSelected(prevStatus => {
-                const newArray = [...prevStatus];
-                newArray[index] = newArray[index] === "selecionado" ? "vazio" : newValue;
-                return newArray;
-              });
-        }else{
-            alert("Assento indisponível!")
+        if (seat.isAvailable) {
+          const newArray = [...isSelected];
+          newArray[index] = newArray[index] === "selecionado" ? "vazio" : newValue;
+          setIsSelected(newArray);
+      
+          const updatedIndexSelectedSeat = newArray.reduce((indices, selec, i) => {
+            if (selec === 'selecionado') {
+              indices.push(i);
+            }
+            return indices;
+          }, []);
+          setIndexSelectedSeat(updatedIndexSelectedSeat);
+        } else {
+          alert("Assento indisponível!");
         }
       };
+      
     return (
         <PageContainer>
             Selecione o(s) assento(s)
