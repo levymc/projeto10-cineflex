@@ -1,21 +1,35 @@
 import styled from "styled-components"
 import { useLocation } from 'react-router-dom';
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function SuccessPage() {
     const {state} = useLocation();
     const {nomeComprador, cpfComprador, isSelected, allSeats, indexSelectedSeat} = state
+    let ids = []
     console.log(allSeats.seats[indexSelectedSeat], indexSelectedSeat)
-
+    console.log(allSeats)
+    indexSelectedSeat.forEach(element => {
+        console.log(allSeats.seats[element].id)
+        ids.push(allSeats.seats[element].id)
+        console.log(ids)
+    });
+    React.useEffect(()=>{
+        axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', {ids: ids, name: nomeComprador, cpf: cpfComprador.replace(/[.-]/g, "")}).then(response =>{
+            console.log(response)
+        }).catch(e => {
+            console.log(e)
+        })
+    }, [])
     
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
             <TextContainer>
-                <strong><p>Filme e sessão</p></strong>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>03/03/2023 - 14:00</p>
+                <strong><p>FIlme e Sessão</p></strong>
+                <p>{allSeats.movie.title}</p>
+                <p>{allSeats.day.weekday} {allSeats.day.date} - {allSeats.name}</p>
             </TextContainer>
 
             <TextContainer>
