@@ -1,10 +1,11 @@
 import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function SeatsPage(props) {
     const [isLoading, setIsLoading] = useState(true);
+    const navigateTo = useNavigate();
 
     const icons = {
         selecionado: {
@@ -27,10 +28,24 @@ export default function SeatsPage(props) {
 
     const {state} = useLocation();
     const {day, time, sessionId, movieId} = state;
-    // const parametros = useParams();
 
     const [isSelected, setIsSelected] = useState([])
     const [movie, setMovie] = useState([])
+
+    const [nomeComprador, setNomeComprador] = useState('');
+    const [cpfComprador, setCpfComprador] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+        // Enviar os dados para o servidor
+        navigateTo('/sucesso', {
+        state: {
+            nomeComprador: nomeComprador,
+            cpfComprador: cpfComprador
+        }
+        })
+    };
 
     React.useEffect(() => {
         const getSeats = async () => {
@@ -61,7 +76,6 @@ export default function SeatsPage(props) {
     React.useEffect(() => {
             atualiza();
         }, [props.allSeats]); // Adicione este useEffect com dependência em props.allSeats
-        console.log(props.allSeats)
         const atualiza = () => {
             setIsSelected(
                 props.allSeats?.seats?.map((selec, i) => selec.isAvailable === true ? "vazio" : "indisponivel") || []
@@ -74,20 +88,15 @@ export default function SeatsPage(props) {
             setIsSelected(prevStatus => {
                 const newArray = [...prevStatus];
                 newArray[index] = newArray[index] === "selecionado" ? "vazio" : newValue;
-              //   console.log(newArray)
                 return newArray;
               });
         }else{
             alert("Assento indisponível!")
         }
-        console.log(isSelected)
-        
       };
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-
-            
             <SeatsContainer>
                 {props.allSeats.seats && props.allSeats.seats.map((seat, i) => 
                     <SeatItem 
@@ -117,25 +126,31 @@ export default function SeatsPage(props) {
                     </CaptionItem>
                     ))
                 }
-                
-                {/* <CaptionItem>
-                    <CaptionCircle />
-                    Disponível
-                </CaptionItem>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Indisponível
-                </CaptionItem> */}
             </CaptionContainer>
 
-            <FormContainer>
-                Nome do Comprador:
-                <input data-test="client-name" placeholder="Digite seu nome..." />
+            <FormContainer onSubmit={handleSubmit}>
+                <label>
+                    Nome do Comprador:
+                    <input data-test="client-name"
+                        value={nomeComprador}
+                        onChange={(event) => setNomeComprador(event.target.value) } 
+                        type="text" 
+                        placeholder="Digite seu nome..." 
+                    />
+                </label>
 
-                CPF do Comprador:
-                <input data-test="client-cpf" placeholder="Digite seu CPF..." />
+                <label>
+                    CPF do Comprador:
+                    <input
+                    type="text"
+                    data-test="client-cpf"
+                    value={cpfComprador}
+                    onChange={(event) => setCpfComprador(event.target.value)}
+                    placeholder="Digite seu CPF..."
+                    />
+                </label>
 
-                <button data-test="book-seat-btn" onClick={() => console.log(id)}>Reservar Assento(s)</button>
+                <button type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer data-test="footer">
@@ -180,7 +195,7 @@ const SeatsContainer = styled.div`
     justify-content: center;
     margin-top: 20px;
 `
-const FormContainer = styled.div`
+const FormContainer = styled.form`
     width: calc(100vw - 40px); 
     display: flex;
     flex-direction: column;

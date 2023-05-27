@@ -1,7 +1,10 @@
 import styled from "styled-components"
+import { useLocation } from 'react-router-dom';
 
 export default function SuccessPage() {
-
+    const {state} = useLocation();
+    // const {nomeComprador, cpfComprador} = state
+    console.log(state)
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>

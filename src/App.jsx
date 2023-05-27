@@ -53,7 +53,10 @@ export default function App() {
                     }>
                     </Route>
                     
-                    {/* <SuccessPage /> */}
+                    <Route path="/sucesso" element={
+                        <SuccessPage />
+                    }>
+                    </Route>
                 </Routes>
             </Router>
         </>
