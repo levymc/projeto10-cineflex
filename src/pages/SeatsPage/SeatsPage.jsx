@@ -77,6 +77,8 @@ export default function SeatsPage(props) {
               //   console.log(newArray)
                 return newArray;
               });
+        }else{
+            alert("Assento indisponível!")
         }
         console.log(isSelected)
         
