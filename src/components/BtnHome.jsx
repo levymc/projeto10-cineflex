@@ -7,9 +7,13 @@ import { arrowBackOutline } from 'ionicons/icons';
 export default function BtnHome(){
     const navigateTo = useNavigate();
 
+    const handleGoBack = () => {
+        navigateTo(-1); // Navega de volta para a página anterior
+    }
+
     return (
-        <SecBtn onClick={() => navigateTo('/')}>
-            <IonIcon data-test="go-home-header-btn" icon={arrowBackOutline} id="arrowIcon"></IonIcon>
+        <SecBtn>
+            <IonIcon onClick={handleGoBack} data-test="go-home-header-btn" icon={arrowBackOutline} id="arrowIcon"></IonIcon>
         </SecBtn>
     )
 }
