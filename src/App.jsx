@@ -6,8 +6,10 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 import axios from 'axios';
 import React, { useState } from "react";
 import {BrowserRouter as Router, Route, Link, Routes, useNavigate} from 'react-router-dom';
+import BtnHome from "./components/btnHome";
 
 export default function App() {
+
     axios.defaults.headers.common['Authorization'] = 'JrVC988hm5rkhTQCtGv4DBlq';
 
     const [allMovies, setAllMovies] = useState([]);
@@ -31,16 +33,17 @@ export default function App() {
     return (
         <>
             <Router>
-                <NavContainer>CINEFLEX</NavContainer>
+                <NavContainer>
+                    <BtnHome /> 
+                    CINEFLEXCINEFLEX
+                </NavContainer>
 
                 <Routes>
-
                     <Route path="/" element={
                         <HomePage
                             allMovies = {allMovies}
                         />
                     }>
-                        
                     </Route>
 
                     <Route path="/sessoes/:idFilme" element={

@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { useNavigate } from 'react-router-dom';
 
-
 export default function HomePage(props) {
     const navigateTo = useNavigate();
     if(props.allMovies.length === 0){
@@ -38,6 +37,7 @@ export default function HomePage(props) {
 }
 
 const PageContainer = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
