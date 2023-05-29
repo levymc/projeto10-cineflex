@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 import axios from "axios";
+import 'materialize-css/dist/css/materialize.min.css';
 
 export default function SuccessPage() {
     const navigateTo = useNavigate();
@@ -45,7 +46,7 @@ export default function SuccessPage() {
                 <p>CPF: {cpfComprador}</p>
             </TextContainer>
 
-            <button onClick={() => navigateTo("/")}>Voltar para Home</button>
+            <button className="waves-effect waves-light orange btn-small" onClick={() => navigateTo("/")}>Voltar para Home</button>
         </PageContainer>
     )
 }
