@@ -2,6 +2,7 @@ import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
 import { useLocation, useNavigate, Link  } from 'react-router-dom';
+import 'materialize-css/dist/css/materialize.min.css';
 
 
 export default function SessionsPage() {
@@ -35,7 +36,7 @@ export default function SessionsPage() {
                     {day.weekday} - {day.date}
                     <ButtonsContainer key={day.id} data-test="movie-day">
                         {day.showtimes.map((time, i) => 
-                            <button data-test="showtime" onClick={() => navigateTo(`/assentos/${day.id}` ,{state: {sessionId: time.id, movieId: movieId, time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
+                            <button className="waves-effect waves-light orange btn-small" data-test="showtime" onClick={() => navigateTo(`/assentos/${day.id}` ,{state: {sessionId: time.id, movieId: movieId, time: time, day: day.weekday}})} key={time.id}>{time.name}</button>
                         )}
                     </ButtonsContainer>
                 </SessionContainer>
@@ -83,6 +84,7 @@ const ButtonsContainer = styled.div`
     margin: 20px 0;
     button {
         margin-right: 20px;
+        z-index: 0 !important;
     }
     a {
         text-decoration: none;
