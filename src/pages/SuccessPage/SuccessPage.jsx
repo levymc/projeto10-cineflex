@@ -29,24 +29,24 @@ export default function SuccessPage() {
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
-                <strong><p>FIlme e Sessão</p></strong>
+            <TextContainer  data-test="movie-info">
+                <strong><p>Filme e Sessão</p></strong>
                 <p>{allSeats.movie.title}</p>
                 <p>{allSeats.day.weekday} {allSeats.day.date} - {allSeats.name}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
                 {indexSelectedSeat.map((indice, i) => <p>Assento {allSeats.seats[indice].name}</p>)}
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="client-info">
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {nomeComprador}</p>
                 <p>CPF: {cpfComprador}</p>
             </TextContainer>
 
-            <button className="waves-effect waves-light orange btn-small" onClick={() => navigateTo("/")}>Voltar para Home</button>
+            <button data-test="go-home-btn" className="waves-effect waves-light orange btn-small" onClick={() => navigateTo("/")}>Voltar para Home</button>
         </PageContainer>
     )
 }
