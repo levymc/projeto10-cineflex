@@ -1,9 +1,11 @@
 import styled from "styled-components"
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 import axios from "axios";
 
 export default function SuccessPage() {
+    const navigateTo = useNavigate();
+
     const {state} = useLocation();
     const {nomeComprador, cpfComprador, isSelected, allSeats, indexSelectedSeat} = state
     let ids = []
@@ -43,7 +45,7 @@ export default function SuccessPage() {
                 <p>CPF: {cpfComprador}</p>
             </TextContainer>
 
-            <button>Voltar para Home</button>
+            <button onClick={() => navigateTo("/")}>Voltar para Home</button>
         </PageContainer>
     )
 }
