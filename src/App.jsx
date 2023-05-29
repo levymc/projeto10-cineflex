@@ -6,7 +6,7 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 import axios from 'axios';
 import React, { useState } from "react";
 import {BrowserRouter as Router, Route, Link, Routes, useNavigate} from 'react-router-dom';
-import BtnHome from "./components/btnHome";
+import BtnHome from "./components/BtnHome";
 
 export default function App() {
 
