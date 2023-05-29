@@ -2,6 +2,8 @@ import styled from "styled-components"
 import axios from 'axios';
 import React, { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
+import 'materialize-css/dist/css/materialize.min.css';
+
 
 export default function SeatsPage(props) {
     const [isLoading, setIsLoading] = useState(true);
@@ -163,7 +165,7 @@ export default function SeatsPage(props) {
                     />
                 </label>
 
-                <button type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
+                <button className="waves-effect waves-light orange btn-small" type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer data-test="footer">
@@ -198,6 +200,7 @@ const PageContainer = styled.div`
     margin-top: 30px;
     padding-bottom: 120px;
     padding-top: 70px;
+    width:100%;
 `
 const SeatsContainer = styled.div`
     width: 330px;
@@ -209,16 +212,21 @@ const SeatsContainer = styled.div`
     margin-top: 20px;
 `
 const FormContainer = styled.form`
-    width: calc(100vw - 40px); 
+    gap: 1rem;
+    width: 100%; 
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    margin: 20px 0;
+    align-items: center;
+    margin: auto;
     font-size: 18px;
+    padding-top: 1.5rem;
+    margin-bottom: 1rem;
     button {
         align-self: center;
+        z-index: 0 !important;
     }
     input {
+
         width: calc(100vw - 60px);
     }
 `
