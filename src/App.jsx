@@ -35,7 +35,7 @@ export default function App() {
             <Router>
                 <NavContainer>
                     <BtnHome /> 
-                    CINEFLEXCINEFLEX
+                    CINEFLEX
                 </NavContainer>
 
                 <Routes>
